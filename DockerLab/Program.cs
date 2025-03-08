@@ -1,4 +1,7 @@
 
+using DockerLab.Interface;
+using DockerLab.Service;
+
 namespace DockerLab
 {
     public class Program
@@ -11,6 +14,7 @@ namespace DockerLab
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddSingleton<IHeatSolverService, HeatSolverService>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
