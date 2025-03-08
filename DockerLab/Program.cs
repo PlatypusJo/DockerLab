@@ -1,6 +1,8 @@
 
 using DockerLab.Interface;
 using DockerLab.Service;
+using Microsoft.AspNetCore.Hosting;
+using System.Reflection.PortableExecutable;
 
 namespace DockerLab
 {
@@ -10,6 +12,17 @@ namespace DockerLab
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -17,7 +30,7 @@ namespace DockerLab
             builder.Services.AddSingleton<IHeatSolverService, HeatSolverService>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,6 +39,8 @@ namespace DockerLab
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors();
 
             app.UseHttpsRedirection();
 
