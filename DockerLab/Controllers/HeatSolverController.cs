@@ -30,7 +30,7 @@ public class HeatSolverController : ControllerBase
 
         if (result is null)
         {
-            return BadRequest("Условие устойчивости не выполнено");
+            return BadRequest("The stability condition is not satisfied");
         }
 
         return Ok(result);
